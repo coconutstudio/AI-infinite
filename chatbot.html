@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Chatbot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&family=Cinzel:wght@400;600&family=MedievalSharp&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── Themes ── */
+:root {
+  --bg:#0e0e10;--surface:#18181c;--surface2:#222228;--surface3:#2a2a32;
+  --border:#2e2e38;--border2:#3e3e4e;--accent:#7c6af7;--accent2:#a78bfa;
+  --text:#e8e8f0;--muted:#6b6b80;--muted2:#4a4a5a;
+  --user-bg:#1e1b3a;--user-border:#4c3fb5;
+  --danger:#ef4444;--success:#22c55e;--warn:#f59e0b;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;--display:'DM Sans',sans-serif;
+  --transition: all 0.3s ease;
+}
+[data-theme="dnd"] {
+  --bg:#0a0705;--surface:#130e09;--surface2:#1c1510;--surface3:#251c14;
+  --border:#3d2e1e;--border2:#5a4530;--accent:#c8860a;--accent2:#e8a82a;
+  --text:#f0e6d0;--muted:#8a7060;--muted2:#5a4535;
+  --user-bg:#1a1008;--user-border:#8a5a20;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;--display:'Cinzel',serif;
+}
+[data-theme="forest"] {
+  --bg:#060d08;--surface:#0d1a0f;--surface2:#152318;--surface3:#1c2e20;
+  --border:#2a4a30;--border2:#3a6040;--accent:#4ade80;--accent2:#86efac;
+  --text:#e0f0e8;--muted:#5a8060;--muted2:#3a5040;
+  --user-bg:#0a1f0e;--user-border:#2a7a40;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;--display:'DM Sans',sans-serif;
+}
+[data-theme="ocean"] {
+  --bg:#040810;--surface:#080f1c;--surface2:#0e1828;--surface3:#152035;
+  --border:#1e3555;--border2:#2a4870;--accent:#38bdf8;--accent2:#7dd3fc;
+  --text:#e0f0ff;--muted:#5080a0;--muted2:#304060;
+  --user-bg:#080f28;--user-border:#1a4080;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;--display:'DM Sans',sans-serif;
+}
+[data-theme="light"] {
+  --bg:#f4f4f6;--surface:#ffffff;--surface2:#f0f0f4;--surface3:#e8e8ee;
+  --border:#d8d8e0;--border2:#c0c0cc;--accent:#6c5ce7;--accent2:#8b7ff0;
+  --text:#1a1a2e;--muted:#6060808;--muted2:#a0a0b0;
+  --user-bg:#ede8ff;--user-border:#9d8df0;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;--display:'DM Sans',sans-serif;
+}
+[data-theme="blood"] {
+  --bg:#080005;--surface:#120008;--surface2:#1a000e;--surface3:#220012;
+  --border:#4a0020;--border2:#6a0030;--accent:#ff2255;--accent2:#ff6688;
+  --text:#ffe0e8;--muted:#804060;--muted2:#502030;
+  --user-bg:#1a0010;--user-border:#800030;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;--display:'DM Sans',sans-serif;
+}
+
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;transition:var(--transition)}
+body{display:flex;height:100vh;overflow:hidden}
+
+/* ── Sidebar ── */
+.sidebar{width:255px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;transition:var(--transition)}
+.sb-head{padding:14px 14px 0;display:flex;align-items:center;gap:9px}
+.logo{width:28px;height:28px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:var(--transition)}
+.sb-head h1{font-size:13px;font-weight:500;font-family:var(--display);transition:var(--transition)}
+.new-btn{margin:10px;padding:8px 12px;background:var(--accent);border:none;border-radius:9px;color:#fff;font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer;width:calc(100% - 20px);transition:opacity .15s}
+.new-btn:hover{opacity:.85}
+.chat-list{flex:1;overflow-y:auto;padding:4px 6px;display:flex;flex-direction:column;gap:2px}
+.chat-list::-webkit-scrollbar{width:2px}
+.chat-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.ci{padding:7px 9px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);transition:background .1s,color .1s}
+.ci:hover{background:var(--surface2);color:var(--text)}
+.ci.active{background:var(--surface2);color:var(--text)}
+.ci-title{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ci-del{opacity:0;font-size:11px;color:var(--muted);border:none;background:none;cursor:pointer;padding:2px 4px;border-radius:3px;transition:opacity .15s,color .15s;flex-shrink:0}
+.ci:hover .ci-del{opacity:1}
+.ci-del:hover{color:var(--danger)}
+.no-chats{padding:14px 10px;font-size:11px;color:var(--muted2);text-align:center;font-family:var(--mono)}
+.sb-foot{padding:10px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.foot-label{font-size:10px;color:var(--muted);font-family:var(--mono)}
+
+/* ── Theme picker ── */
+.theme-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.tswatch{width:100%;aspect-ratio:1;border-radius:6px;border:2px solid transparent;cursor:pointer;transition:transform .15s,border-color .15s;position:relative;overflow:hidden}
+.tswatch:hover{transform:scale(1.1)}
+.tswatch.active{border-color:var(--accent2)}
+.tswatch[data-t="default"]{background:linear-gradient(135deg,#0e0e10 50%,#7c6af7 50%)}
+.tswatch[data-t="dnd"]{background:linear-gradient(135deg,#0a0705 50%,#c8860a 50%)}
+.tswatch[data-t="forest"]{background:linear-gradient(135deg,#060d08 50%,#4ade80 50%)}
+.tswatch[data-t="ocean"]{background:linear-gradient(135deg,#040810 50%,#38bdf8 50%)}
+.tswatch[data-t="light"]{background:linear-gradient(135deg,#f4f4f6 50%,#6c5ce7 50%)}
+.tswatch[data-t="blood"]{background:linear-gradient(135deg,#080005 50%,#ff2255 50%)}
+
+/* Provider & key */
+.provider-tabs{display:flex;gap:4px}
+.ptab{flex:1;padding:5px 0;border-radius:7px;border:1px solid var(--border);background:none;color:var(--muted);font-family:var(--font);font-size:11px;cursor:pointer;transition:all .15s;text-align:center}
+.ptab:hover{border-color:var(--border2);color:var(--text)}
+.ptab.active{border-color:var(--accent);color:var(--accent2);background:var(--user-bg)}
+.provider-info{font-size:10px;color:var(--muted);font-family:var(--mono);line-height:1.6}
+.provider-info a{color:var(--accent2);text-decoration:none}
+.provider-info a:hover{text-decoration:underline}
+.key-row{display:flex;gap:5px}
+.key-row input{flex:1;font-family:var(--mono);font-size:10px;background:var(--surface2);border:1px solid var(--border);border-radius:7px;color:var(--text);padding:6px 8px;outline:none;transition:border-color .15s;min-width:0}
+.key-row input:focus{border-color:var(--accent)}
+.key-save{padding:6px 9px;border-radius:7px;border:1px solid var(--border);background:var(--surface3);color:var(--text);font-family:var(--font);font-size:11px;cursor:pointer;white-space:nowrap;transition:background .15s}
+.key-save:hover{background:var(--border)}
+.key-status{font-size:10px;color:var(--muted);font-family:var(--mono)}
+.key-status.ok{color:var(--success)}
+.key-status.err{color:var(--danger)}
+
+/* ── Main ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.chat-hdr{padding:11px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--surface);transition:var(--transition)}
+.chat-hdr-title{font-size:13px;font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--display)}
+.hdr-badge{padding:3px 9px;border-radius:20px;font-size:10px;font-family:var(--mono);border:1px solid var(--border);color:var(--muted);flex-shrink:0}
+.hdr-badge.anthropic{border-color:#c084fc44;color:#c084fc;background:#1a0a2a}
+.hdr-badge.google{border-color:#4ade8044;color:#4ade80;background:#0a1a0a}
+.hdr-badge.groq{border-color:#60a5fa44;color:#60a5fa;background:#0a0a1a}
+.save-btn{padding:4px 10px;border-radius:7px;border:1px solid var(--border);background:none;color:var(--muted);font-family:var(--font);font-size:11px;cursor:pointer;transition:all .15s;flex-shrink:0}
+.save-btn:hover{border-color:var(--accent);color:var(--accent2)}
+.save-btn.saved{border-color:var(--success);color:var(--success)}
+.conn-bar{padding:5px 16px;font-size:10px;font-family:var(--mono);display:flex;align-items:center;justify-content:center;gap:6px;transition:var(--transition)}
+.conn-bar.idle{background:#111118;color:var(--muted2);border-bottom:1px solid var(--border)}
+.conn-bar.trying{background:#1a1500;color:var(--warn);border-bottom:1px solid #3a3000}
+.conn-bar.ok{background:#091409;color:var(--success);border-bottom:1px solid #1a3a1a}
+.conn-bar.err{background:#1a0909;color:var(--danger);border-bottom:1px solid #3a1a1a}
+.conn-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+/* ── Messages ── */
+.messages{flex:1;overflow-y:auto;padding:20px 18px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+.messages::-webkit-scrollbar{width:3px}
+.messages::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);text-align:center;padding:40px}
+.empty .icon{font-size:34px}
+.empty p{font-size:12px;max-width:260px;line-height:1.6}
+.msg{display:flex;gap:9px;animation:fadeUp .2s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.msg.user{flex-direction:row-reverse}
+.av{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0;font-family:var(--mono)}
+.msg.user .av{background:var(--user-border);color:#fff}
+.msg.assistant .av{background:var(--surface2);color:var(--accent2);border:1px solid var(--border)}
+.bubble{max-width:80%;padding:10px 14px;font-size:13px;line-height:1.7;word-break:break-word;white-space:pre-wrap}
+.msg.user .bubble{background:var(--user-bg);border:1px solid var(--user-border);color:var(--text);border-radius:12px 12px 3px 12px}
+.msg.assistant .bubble{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:12px 12px 12px 3px}
+
+/* ── Canvas card (AI graphics) ── */
+.canvas-card{max-width:90%;margin:0 auto;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface2);animation:fadeUp .3s ease}
+.canvas-card-label{padding:6px 12px;font-size:10px;font-family:var(--mono);color:var(--muted);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px}
+.canvas-card canvas{display:block;max-width:100%}
+
+/* ── Typing ── */
+.typing-row{display:flex;gap:9px}
+.typing-bubble{background:var(--surface);border:1px solid var(--border);border-radius:12px 12px 12px 3px;padding:12px 15px;display:flex;gap:4px;align-items:center}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:pulse 1.3s infinite ease-in-out}
+.dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}
+@keyframes pulse{0%,80%,100%{opacity:.2;transform:scale(.9)}40%{opacity:1;transform:scale(1)}}
+.sys{text-align:center;font-size:10px;color:var(--muted2);font-family:var(--mono);padding:2px}
+
+.no-key-bar{padding:8px 16px;background:#1f1700;border-top:1px solid #4a3800;font-size:11px;color:var(--warn);text-align:center;font-family:var(--mono)}
+.input-area{padding:12px 16px;border-top:1px solid var(--border);background:var(--surface);display:flex;gap:8px;align-items:flex-end;transition:var(--transition)}
+#inp{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:11px;color:var(--text);font-family:var(--font);font-size:13px;padding:9px 13px;resize:none;min-height:40px;max-height:120px;outline:none;transition:border-color .15s;line-height:1.5}
+#inp:focus{border-color:var(--accent)}
+#inp::placeholder{color:var(--muted)}
+#send{width:40px;height:40px;border-radius:10px;background:var(--accent);border:none;color:#fff;cursor:pointer;font-size:15px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .3s,opacity .15s,transform .1s}
+#send:hover{opacity:.85}#send:active{transform:scale(.93)}#send:disabled{opacity:.25;cursor:default}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sb-head"><div class="logo">✦</div><h1>AI Chatbot</h1></div>
+  <button class="new-btn" onclick="newChat()">＋ New chat</button>
+  <div class="chat-list" id="chat-list"></div>
+
+  <div class="sb-foot">
+    <!-- Theme picker -->
+    <div class="foot-label">Color scheme</div>
+    <div class="theme-grid">
+      <div class="tswatch active" data-t="default" title="Dark" onclick="setTheme('default')"></div>
+      <div class="tswatch" data-t="dnd" title="D&D Parchment" onclick="setTheme('dnd')"></div>
+      <div class="tswatch" data-t="forest" title="Forest" onclick="setTheme('forest')"></div>
+      <div class="tswatch" data-t="ocean" title="Ocean" onclick="setTheme('ocean')"></div>
+      <div class="tswatch" data-t="light" title="Light" onclick="setTheme('light')"></div>
+      <div class="tswatch" data-t="blood" title="Blood Moon" onclick="setTheme('blood')"></div>
+    </div>
+
+    <!-- Provider -->
+    <div class="foot-label">Provider</div>
+    <div class="provider-tabs">
+      <button class="ptab active" id="tab-anthropic" onclick="setProvider('anthropic')">Claude</button>
+      <button class="ptab" id="tab-google" onclick="setProvider('google')">Gemini</button>
+      <button class="ptab" id="tab-groq" onclick="setProvider('groq')">Groq</button>
+    </div>
+    <div class="provider-info" id="provider-info"></div>
+
+    <!-- Key -->
+    <div class="foot-label">API Key</div>
+    <div class="key-row">
+      <input type="password" id="key-input" placeholder="Paste key…" autocomplete="off">
+      <button class="key-save" onclick="saveKey()">Save</button>
+    </div>
+    <div class="key-status" id="key-status">No key saved</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="chat-hdr">
+    <div class="chat-hdr-title" id="chat-title">New chat</div>
+    <div class="hdr-badge anthropic" id="hdr-badge">Claude</div>
+    <button class="save-btn" id="save-btn" onclick="saveCurrentChat()">&#10003; Save</button>
+  </div>
+  <div class="conn-bar idle" id="conn-bar">
+    <div class="conn-dot"></div>
+    <span id="conn-text">Ready — send a message to connect</span>
+  </div>
+  <div class="messages" id="messages">
+    <div class="empty" id="empty-state">
+      <div class="icon">✦</div>
+      <p>Pick a provider, add your key, and start chatting.<br><br>
+      Try asking me to <strong>draw a dungeon map</strong>, <strong>show a character stat block</strong>, or <strong>generate a battle scene</strong> — I can render graphics right here!</p>
+    </div>
+  </div>
+  <div id="no-key-bar" class="no-key-bar" style="display:none">⚠ No API key — add one in the sidebar</div>
+  <div class="input-area">
+    <textarea id="inp" placeholder="Ask anything, or ask me to draw a dungeon, map, scene…" rows="1"></textarea>
+    <button id="send">&#9658;</button>
+  </div>
+</div>
+
+<script>
+// ── Providers ─────────────────────────────────────────────────────────
+const PROVIDERS = {
+  anthropic:{label:'Claude (Anthropic)',badge:'Claude',badgeClass:'anthropic',model:'claude-sonnet-4-20250514',placeholder:'sk-ant-…',info:'Paid API — very capable.\n<a href="https://console.anthropic.com/settings/keys" target="_blank">Get key ↗</a>',lsKey:'chatbot_key_anthropic'},
+  google:{label:'Gemini (Google)',badge:'Gemini',badgeClass:'google',model:'gemini-1.5-flash',placeholder:'AIza…',info:'Free — 1M tokens/day.\n<a href="https://aistudio.google.com/app/apikey" target="_blank">Get free key ↗</a>',lsKey:'chatbot_key_google'},
+  groq:{label:'Groq (Llama 3)',badge:'Groq',badgeClass:'groq',model:'llama-3.3-70b-versatile',placeholder:'gsk_…',info:'Free — fast Llama 3 70B.\n<a href="https://console.groq.com/keys" target="_blank">Get free key ↗</a>',lsKey:'chatbot_key_groq'}
+};
+
+const LS_CHATS='chatbot_chats_v3', LS_THEME='chatbot_theme';
+let provider='anthropic', keys={anthropic:'',google:'',groq:''};
+let history=[], currentId=null, busy=false, chats={};
+
+// ── System prompt — tells AI it can emit canvas code ──────────────────
+const SYSTEM = `You are a helpful, knowledgeable assistant. Give clear, accurate answers.
+
+You have a special ability: you can render GRAPHICS directly in the chat using a special canvas block.
+When the user asks you to draw, show, visualize, map, or generate something visual (dungeon maps, battle scenes, character stats, spell effects, terrain, etc.), respond with a canvas block like this:
+
+\`\`\`canvas
+// Pure JavaScript that draws on a 600x400 canvas called ctx
+// ctx is a CanvasRenderingContext2D. Canvas is 600x400 by default but you can set CANVAS_W and CANVAS_H
+// CANVAS_W = 600; CANVAS_H = 400;
+ctx.fillStyle = '#1a0a05';
+ctx.fillRect(0,0,CANVAS_W,CANVAS_H);
+// ... your drawing code here
+\`\`\`
+
+You can include BOTH regular text AND a canvas block in the same reply — describe the scene in text then draw it.
+Use canvas blocks for: dungeon maps, hex maps, stat blocks, character sheets, battle grids, spell effect animations, item cards, weather/environment scenes, etc.
+Make graphics detailed and beautiful. Use gradients, shadows, patterns. For D&D content use parchment tones, aged textures, fantasy aesthetics.
+Always set CANVAS_W and CANVAS_H at the top of your canvas code if you want a non-default size.`;
+
+// ── Theme ─────────────────────────────────────────────────────────────
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t === 'default' ? '' : t);
+  document.querySelectorAll('.tswatch').forEach(s => s.classList.toggle('active', s.dataset.t === t));
+  try { localStorage.setItem(LS_THEME, t); } catch(e) {}
+}
+
+// ── Init ──────────────────────────────────────────────────────────────
+function init() {
+  for (const p of Object.keys(PROVIDERS)) {
+    try { keys[p] = localStorage.getItem(PROVIDERS[p].lsKey) || ''; } catch(e) {}
+  }
+  try { chats = JSON.parse(localStorage.getItem(LS_CHATS)||'{}'); } catch(e) { chats={}; }
+  try { const t=localStorage.getItem(LS_THEME); if(t) setTheme(t); } catch(e) {}
+  setProvider('anthropic');
+  renderList();
+}
+
+function setProvider(p) {
+  provider = p;
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+p).classList.add('active');
+  document.getElementById('provider-info').innerHTML = PROVIDERS[p].info.replace(/\n/g,'<br>');
+  const ki=document.getElementById('key-input');
+  ki.placeholder=PROVIDERS[p].placeholder;
+  ki.value=keys[p]?'••••••••••••••••':'';
+  setKeyStatus(keys[p]?'ok':'', keys[p]?'✓ Key saved':'No key for this provider');
+  const badge=document.getElementById('hdr-badge');
+  badge.textContent=PROVIDERS[p].badge; badge.className='hdr-badge '+PROVIDERS[p].badgeClass;
+  updateNoKeyBar(); setConnBar('idle','Provider switched — ready');
+}
+
+function saveKey() {
+  const v=document.getElementById('key-input').value.trim();
+  if(!v||v.includes('•')){setKeyStatus('err','✗ Paste a real key');return;}
+  keys[provider]=v;
+  try{localStorage.setItem(PROVIDERS[provider].lsKey,v);}catch(e){}
+  document.getElementById('key-input').value='••••••••••••••••';
+  setKeyStatus('ok','✓ Saved to browser');
+  updateNoKeyBar(); setConnBar('idle','Key saved — ready');
+}
+
+function setKeyStatus(cls,msg){const el=document.getElementById('key-status');el.textContent=msg;el.className='key-status'+(cls?' '+cls:'');}
+function updateNoKeyBar(){document.getElementById('no-key-bar').style.display=keys[provider]?'none':'block';}
+function setConnBar(mode,text){document.getElementById('conn-bar').className='conn-bar '+mode;document.getElementById('conn-text').textContent=text;}
+
+// ── CORS-proof fetch ──────────────────────────────────────────────────
+async function safeFetch(url, headers, bodyObj, label) {
+  const bodyStr = JSON.stringify(bodyObj);
+
+  // 1. Direct
+  try {
+    setConnBar('trying','Connecting to '+label+'…');
+    const res = await fetch(url,{method:'POST',headers,body:bodyStr});
+    const data = await res.json();
+    setConnBar('ok','✓ '+label+' — direct');
+    return data;
+  } catch(e) {}
+
+  // 2. cors.sh
+  try {
+    setConnBar('trying',label+': trying proxy…');
+    const res = await fetch('https://proxy.cors.sh/'+url,{
+      method:'POST',
+      headers:{...headers,'x-cors-api-key':'temp_corssh'},
+      body:bodyStr
+    });
+    const data = await res.json();
+    setConnBar('ok','✓ '+label+' — via cors.sh');
+    return data;
+  } catch(e) {}
+
+  // 3. corsproxy.io
+  try {
+    setConnBar('trying',label+': trying corsproxy.io…');
+    const res = await fetch('https://corsproxy.io/?url='+encodeURIComponent(url),{
+      method:'POST',headers,body:bodyStr
+    });
+    const data = await res.json();
+    setConnBar('ok','✓ '+label+' — via corsproxy.io');
+    return data;
+  } catch(e) {
+    setConnBar('err','✗ All connection methods failed');
+    throw new Error('Could not reach '+label+' — check your internet connection');
+  }
+}
+
+// ── API calls ─────────────────────────────────────────────────────────
+async function callAnthropic(msgs) {
+  const data = await safeFetch('https://api.anthropic.com/v1/messages',
+    {'Content-Type':'application/json','x-api-key':keys.anthropic,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    {model:PROVIDERS.anthropic.model,max_tokens:2048,system:SYSTEM,messages:msgs},
+    'Anthropic');
+  if(data.error) throw new Error(data.error.message);
+  return data.content.map(b=>b.text||'').join('');
+}
+
+async function callGoogle(msgs) {
+  const geminiMsgs = msgs.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));
+  const data = await safeFetch(
+    'https://generativelanguage.googleapis.com/v1beta/models/'+PROVIDERS.google.model+':generateContent?key='+keys.google,
+    {'Content-Type':'application/json'},
+    {contents:geminiMsgs,systemInstruction:{parts:[{text:SYSTEM}]},generationConfig:{maxOutputTokens:2048}},
+    'Gemini');
+  if(data.error) throw new Error(data.error.message);
+  return data.candidates?.[0]?.content?.parts?.[0]?.text||'(no response)';
+}
+
+async function callGroq(msgs) {
+  const data = await safeFetch('https://api.groq.com/openai/v1/chat/completions',
+    {'Content-Type':'application/json','Authorization':'Bearer '+keys.groq},
+    {model:PROVIDERS.groq.model,messages:[{role:'system',content:SYSTEM},...msgs],max_tokens:2048},
+    'Groq');
+  if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
+  return data.choices?.[0]?.message?.content||'(no response)';
+}
+
+async function callProvider(msgs) {
+  if(provider==='anthropic') return callAnthropic(msgs);
+  if(provider==='google')    return callGoogle(msgs);
+  if(provider==='groq')      return callGroq(msgs);
+}
+
+// ── Canvas renderer ───────────────────────────────────────────────────
+function extractCanvas(text) {
+  const match = text.match(/```canvas\n([\s\S]*?)```/);
+  if (!match) return null;
+  return match[1].trim();
+}
+
+function stripCanvasBlock(text) {
+  return text.replace(/```canvas\n[\s\S]*?```/g, '').trim();
+}
+
+function renderCanvasCard(code, label='AI Generated Graphic') {
+  // Parse optional size hints
+  let W=600, H=400;
+  const wm=code.match(/CANVAS_W\s*=\s*(\d+)/); if(wm) W=parseInt(wm[1]);
+  const hm=code.match(/CANVAS_H\s*=\s*(\d+)/); if(hm) H=parseInt(hm[1]);
+
+  const card = document.createElement('div');
+  card.className = 'canvas-card';
+
+  const lbl = document.createElement('div');
+  lbl.className = 'canvas-card-label';
+  lbl.innerHTML = '&#9670; '+label;
+  card.appendChild(lbl);
+
+  const canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  canvas.style.maxWidth = '100%';
+  card.appendChild(canvas);
+
+  const msgs = document.getElementById('messages');
+  msgs.appendChild(card);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  try {
+    const ctx = canvas.getContext('2d');
+    const CANVAS_W = W, CANVAS_H = H;
+    // eslint-disable-next-line no-new-func
+    new Function('ctx','CANVAS_W','CANVAS_H', code)(ctx, CANVAS_W, CANVAS_H);
+  } catch(e) {
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle='#1a0a0a'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#ef4444'; ctx.font='14px monospace';
+    ctx.fillText('Render error: '+e.message, 20, 40);
+  }
+}
+
+// ── Chat management ───────────────────────────────────────────────────
+function newChat() {
+  currentId=null; history=[];
+  document.getElementById('chat-title').textContent='New chat';
+  const btn=document.getElementById('save-btn'); btn.className='save-btn'; btn.textContent='✓ Save';
+  document.getElementById('messages').innerHTML='<div class="empty" id="empty-state"><div class="icon">✦</div><p>Pick a provider, add your key, and start chatting.<br><br>Try asking me to <strong>draw a dungeon map</strong>, <strong>show a character stat block</strong>, or <strong>generate a battle scene</strong>!</p></div>';
+  renderList();
+}
+
+function saveCurrentChat() {
+  if(!history.length) return;
+  const id=currentId||('chat_'+Date.now()); currentId=id;
+  const first=history.find(m=>m.role==='user');
+  const title=first?first.content.slice(0,50)+(first.content.length>50?'…':''):'Chat';
+  chats[id]={id,title,history:[...history],provider,ts:Date.now()};
+  try{localStorage.setItem(LS_CHATS,JSON.stringify(chats));}catch(e){}
+  document.getElementById('chat-title').textContent=title;
+  const btn=document.getElementById('save-btn'); btn.className='save-btn saved'; btn.textContent='✓ Saved!';
+  setTimeout(()=>{btn.className='save-btn';btn.textContent='✓ Save';},1600);
+  renderList();
+}
+
+function loadChat(id) {
+  const c=chats[id]; if(!c) return;
+  currentId=id; history=[...c.history];
+  if(c.provider) setProvider(c.provider);
+  document.getElementById('chat-title').textContent=c.title;
+  const msgs=document.getElementById('messages'); msgs.innerHTML='';
+  history.forEach(m=>appendBubble(m.role,m.content));
+  msgs.scrollTop=msgs.scrollHeight; renderList();
+}
+
+function deleteChat(id,e) {
+  e.stopPropagation();
+  if(!confirm('Delete this chat?')) return;
+  delete chats[id];
+  try{localStorage.setItem(LS_CHATS,JSON.stringify(chats));}catch(e){}
+  if(currentId===id) newChat(); else renderList();
+}
+
+function renderList() {
+  const el=document.getElementById('chat-list');
+  const list=Object.values(chats).sort((a,b)=>b.ts-a.ts);
+  if(!list.length){el.innerHTML='<div class="no-chats">No saved chats yet</div>';return;}
+  const icons={anthropic:'🟣',google:'🟢',groq:'🔵'};
+  el.innerHTML=list.map(c=>`<div class="ci${c.id===currentId?' active':''}" onclick="loadChat('${c.id}')"><span style="font-size:11px">${icons[c.provider]||'💬'}</span><span class="ci-title">${esc(c.title)}</span><button class="ci-del" onclick="deleteChat('${c.id}',event)">✕</button></div>`).join('');
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ── UI helpers ────────────────────────────────────────────────────────
+function appendBubble(role,text) {
+  const e=document.getElementById('empty-state'); if(e) e.remove();
+  const msgs=document.getElementById('messages');
+  const wrap=document.createElement('div'); wrap.className='msg '+role;
+  const av=document.createElement('div'); av.className='av';
+  av.textContent=role==='user'?'You':(PROVIDERS[provider]?.badge?.slice(0,2)||'AI');
+  const b=document.createElement('div'); b.className='bubble'; b.textContent=text;
+  if(role==='user'){wrap.appendChild(b);wrap.appendChild(av);}
+  else{wrap.appendChild(av);wrap.appendChild(b);}
+  msgs.appendChild(wrap); msgs.scrollTop=msgs.scrollHeight;
+}
+
+function addTyping() {
+  const msgs=document.getElementById('messages');
+  const wrap=document.createElement('div'); wrap.className='typing-row'; wrap.id='typing';
+  const av=document.createElement('div'); av.className='av'; av.textContent=PROVIDERS[provider]?.badge?.slice(0,2)||'AI';
+  const b=document.createElement('div'); b.className='typing-bubble';
+  b.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+  wrap.appendChild(av); wrap.appendChild(b); msgs.appendChild(wrap); msgs.scrollTop=msgs.scrollHeight;
+}
+function removeTyping(){const e=document.getElementById('typing');if(e)e.remove();}
+function addSys(msg){const e=document.createElement('div');e.className='sys';e.textContent=msg;const msgs=document.getElementById('messages');msgs.appendChild(e);msgs.scrollTop=msgs.scrollHeight;}
+
+// ── Send ──────────────────────────────────────────────────────────────
+async function send() {
+  if(busy) return;
+  if(!keys[provider]){alert('Add your '+PROVIDERS[provider].label+' API key in the sidebar first.');return;}
+  const inp=document.getElementById('inp');
+  const text=inp.value.trim(); if(!text) return;
+  inp.value=''; inp.style.height='auto';
+  busy=true; document.getElementById('send').disabled=true;
+
+  appendBubble('user',text);
+  history.push({role:'user',content:text});
+  addTyping();
+
+  try {
+    const rawReply = await callProvider(history);
+    removeTyping();
+
+    // Check for canvas block
+    const canvasCode = extractCanvas(rawReply);
+    const textPart = stripCanvasBlock(rawReply);
+
+    // Show text if there is any
+    if(textPart) {
+      appendBubble('assistant', textPart);
+    }
+
+    // Render canvas if present
+    if(canvasCode) {
+      renderCanvasCard(canvasCode);
+    }
+
+    // Store cleaned reply in history
+    history.push({role:'assistant', content: rawReply});
+    if(currentId) saveCurrentChat();
+
+  } catch(e) {
+    removeTyping();
+    setConnBar('err','✗ '+e.message);
+    addSys('Error: '+e.message);
+  }
+
+  busy=false; document.getElementById('send').disabled=false; inp.focus();
+}
+
+document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
+document.getElementById('inp').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px';});
+document.getElementById('send').addEventListener('click',send);
+
+init();
+</script>
+</body>
+</html>
