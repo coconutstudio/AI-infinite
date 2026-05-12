@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Chatbot</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%237c6af7'/><text x='16' y='22' text-anchor='middle' font-size='18' font-family='system-ui' fill='white'>✦</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&family=Merriweather:wght@300;400;700&family=Fira+Code:wght@400;500&family=Playfair+Display:wght@400;500&family=Nunito:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Lato:wght@300;400;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAA0CAYAAADBjcvWAAAQAElEQVR4AexZbYxex1V+ZubOve/X7rv2rh3Hdq3ExrGdNlTpj5IoSASRgBPF2EkbQEVNKkACfkOokJDoH6T+AMTPgpDSEFLTBtLGSUT5SmkVQkAphULSkLRO4s+1d/217+e9dz54zn137fXueu11UKW2ufueOzNnZs6c55wz5869q/FDer0P7AfNse977EfSY/f92b98+hf/6r+/98izb80+eui750hzrHdJfdKANCTli6hgvfjks98rfum5d/JPHHonf/TQ4eGnDr3Zf+TQ692Hn3719D2P/9NLP/knX/mJ6zXodYZiVAeePTy897kT8Z6vzkR/8wc/e35q2/aT9anJY+m6CdLYidpkk1Q/nq2vkTJSuogs6/ZobZ09XtuYHiMdT6ayabOxPmtvbPbbOzfgA7ffZffc9co9z5+IB75ypP/h33nqp9cCcs3AHn761TMPf2M2nEqaWX9sEheSOi6YFOd1hrkkQzdtopc10LGNii/tblqv+EvLvm1hjvN6lDFIW+hxTtc0MYc6OqqFjmlj0LwBp5Kx+q1797/4iYOvvXut4NYE7JMvvFVeaN2w/kSZIIxNoBsilE65FsVEEkgsY1QAS62TqgRG/KWlikANHkks4VUBr11FQQWYoMm3yB3ntiZwJCicnli3jTr0cA0XZ13DKA558G9ed0dcLSmyDSioTi93SJKEPYAoeD1kYkASSNEB8AgUEisKUAg0R+AaQC8v0TMJBo1xHPOq8fG//nbOCav+rgnYg8/+78nu+q2mV5+iRTPEUmNdVoMe9qmYg6aCWhRZYynKCzgTABNRAQEcQXnWHQxKxLzAWMMiOgJPUhRZG3l7c/rxLx9+YzVk1wSs02pvmvEMi6SGogDGbApV5MjUgugFMWsrI9WPSqMiwglsh6oNiPcCQ1ITdSgLNGlIN/Q0bA3nXIJuY3LX7s8888CCBkvLBU2W8i+29//t4c4ZD0QK1hydkoadHoxmhSSKOJbXRwlyTYORPDJEoZjBKYtSG5SG6yYaFI/8whwa9KGFhUobmPUKP/bROw5eVHRJhdot4SxpFiZt1ZrjCK6E5WjDflkoGo3cB8T36LVqg1Jm9aOwqDQCEniWQs45JKxbrmMQkQhgrmvHx1AkplXNW+FGVVfgLmJ5T/cPB2goD804zPM+2huaODMY0ItZNbJKAJIE1kwONuSwcUhflAxGX+HUBKiYVVVIYJk0et0uJqfaGFIP53MYE+FYD9Rt72ef+FylxJLbqsAefPwbj4FhkjKlq9KBdkRWTzF95gKarXF4KgAqAO4N0M4j2YGFrhQU5diY/zmWgcq7qm80PnCmIxXkl4ByGPEpkbIFYAwGLUbMzOlzXLsGPl8gxpaMrHSC9sYtP4cVLr0C7yKruX7jrweVwlG4Vqbil6FErZYiMHnQcORpQtKj0KE0CZ8AViLHk0ofoTOLgh5XzDZ5SYtbjTJyqrXwOsAbRoVxtJFHZMKYR85CM+MqlByc1VoovK7WiXzMlMzAXiXI1m/egJvuJmLKW/SjBotaS6oBSSswSCTuacOqN/IeFGhhcNEAEFalDGvUjMoIH1QwVmSzFL1+vwqpMh8iswmcL6HMaI+KcgGGE/hMpCEUI0BFVHIUZYMXmyAmyDqyNlk0XWAbTDRpiqEfE95iWhUYB3JF3q/0q6xLJfm8Ge0zcL8EKJ4igi7gTVGhTIyBoeeaDGvlcmQiVU4tDO4Y64iBeoUGVMhggiVxvKBBRFAeQTt4zdOJKQFVQnE9zflJCDQuMWYUhMsvfXlzWStZxlnKkH2hZAEtizBUAilipIBHOSAQnYJplf0O40zfZjBkd8k2l6eXYuUxma8x8lag8iJDwtMhaI+o6CEAkTg0t4YhKSFwcljwIwfM//R8eaXiav2ct6AQ9xrT8sBG5NZB9l/mwOOshaa3uFWR1RTu2L0OrWKAprEjMysPoqxIPGHoDSHQ6wDBEKlXoLEMWxbgcw70svEZDD0MGgYrXFdTnCJXmLXA4n6IYjBSVKOhcVTMj9AwDMMYHHTZx+4t4/jwFuCWyXFkfGxI+OoQ6J1APwTOESAjYoO/SBI+i5V+XH8ltvDeE7BAD3mk3MAWJeuihngp9TQs/VFqhW7oI8YBNpmA29cDkwUIbgxN14Mt+jSJq8IPhBYpI7AUiqLdPCkEgien8q4DlOw3Dy97jsGJFa6rAVthyiWWlrWqUNCIasRPApBICqMyUB6pLdFOHT6yeQo314CpAOwmwFvaGaaSAVI+oEXRwL3qmSQcDeAM4LXIVAStGXJCYClrEBDHydjAMnLvCXcp6aWMtbQVgUk4WRehGW6IHop18CSu4FBLcrTCBeyeSnHHdov1JdCgx4gL9982hW22R2XPQ9sCMSuRY4iSlnEWGFIGlCUwwzEGSVAwEdXladGSz76CVNmw4l5+05c319YaWYsZi5bTBtxPimSQaoUGz5atQQf33rIN+29roz1kf69k4AKR71eb28DP3n4T7t6+Fet6XdgzM2jDIwsFjRRg0xRRGUSGNBieiAkUs6CpSAEMzuouYLWWOxZfVwO2bMLiyfJaUdLSLi1Q0kNF4cBcgE0T47j3tg34zZ+5CXdPAFv5zruuBFo8gZRUXjcUBnkXm1Jg340JHvvoNnzq1h3Y6TRa5/tolIHgPApGgKORClrNEyQI0vD8mPK1pVYmyHj8Xw4J1aWr+5Vv4cpd7GEsOj9kcij5MgFYKqA190ZEBVBANmpA3olVvygxFPBGQekE1gKscgB/BK+Z1xu1JigWBQ/chhmVq0Dm6UihbEifYik8FqOfGo46R63qrqv7lW6KJrtSH/nc52jAoOaAxClkyiJhMpnpdPG1N0/h8Ze+ixdPOMyMKfQTJgQunyUZir4GbA3Hc+DQ28DnvnUGLxw5jSNJgrM8zfe1QZrWYGlW6z3LkqsUDMgcUedwJkdhWSYlguYgLL/0ctYiTlRUeVF7WVVxQ1sYhgfTGLwLKBDQ5844C2A6pvj7N9/F1w/P4QzbPgUS7sU0VXh7Fvjqf57GS0dP4FjCx8LYGM4TUI+e8Uz7kSX4LmZ42NWUqShTsQyK0UCKlBcJlUiB/mX+Yw+kpyqvdCuu1CF8ETwoI/cCYyoh8RA4pNJ9au+TcaC+Cef1FF5+5yz+43TAaQ8MKJFv+Hj1uMd/nQ3o2DpcmmFAAI7KN5tNniU1ikEfVtKgClwqskeRaBVGBHji0Dx5KJ4rtTyklRGcHHfppy9Vl9doBwYLKBBwHCnWUhx2SYxGQsWiSlAw3ecMmwBqT3t5Tugz9EvTwJAfYF55+ySOUse5BvDtadLxM3D1CRq8hqL00Dz1q0RjrjfH97wSjVYd8t5FHQAGIpgVA+hyJNxzmmQgegQBvmZgAT2v6BETUBggMESSAMjJgmwuCETZhoxzlUREltJfowXqtGGNXkjKEmBGmw01vDoDvFUH/vn0ED6r8blcIC01msggX6GcGIX9uS4hfxTDBVIoegjRsm5GBDDZe95ENkMAXSy99FLG4naa4Jw8q6KKkAehxD7E9fSIpuKLx3rFNXWAIl9I+smqhsi8897gdW68l48D7xa0GDu1Hi0v41VUlIpqPuYvsmhMyp1vSxGVR+Bz0xN81AW0ZJgGK9K5iEaSFzEWVwvlphWfTwqBrgfEgowwCAgVAeKohkd6siKqFlgPClXoytiS4eWY7Rz33fT5Dr7Dj9Qd7zCU55M1yOliGSfyLM9SGY8dQgk/9ykaMaoAzzOhZyb0ZgCfDOBYL22OknxIxBz+5oVKkUW3VYG5spy2Ek4BFQiJ6UjFowJkQZ6fKgsrjhEayeXgUYVjwP0SqtJkWWWQc/0uIgE5rasMKkYKlKe5h0xIkLoUCdOnZh0EFlRAUA5QnmYrGYKO5fwa0l/wGwWWX6sCG3a6/yqn9Tr3QUazJgwnRU+JMo4og/bcwI7PrnliApGzY0IraiG+5WpSkE8BTN+GaT3CQ3KBZ+nJizQUKlCGgCxUMDSiQeAg6RMjAhFiODqXwBNkPHnYMmPdIu92Ti6HBYJfiTvPe+bRO79ovYYINFwQtNClKQGgNRUX1ZFckgJoUVAPBT3SCMYkMoIZLiCQp6iw5z8cpDRy9KhkorrYDREQKEgevF4zDFUlDqMrgWK6V8HCMKEYenX26LEXR32X3/XlzeUtAaW4YqRlWVSrKILQQsQGahKQQCiyFJK6UIRFZIrWpkZQlpTAJHU4Ggsq5VQLkTkC4eG4ZwpSmeTwLF2VJDxkuFeGPjZwnOcp19NAIH39dx/5VaxwXRVYFsqXNUV6FcBohCdAEICh1YVAi0dV4a3EhyoINBXWbGt+OuO+4Bg2aG0Nw/Nf4KtN5HwphQ+aRfZRUCVAUvA0F1VnqIoBI1uB6zruy0g9ooqE5JHEcg5XuGT1K3SN2E8d+MBdKTNQ5Atjzj0VaGh5ECNXSBie0XsODOCaiNTCcz85x2dL8EiY+YQisyChwtAAoSj5nmZoc8Aw6VjOUbHgt54B4Af0bwn6FHLCt7mH5YaOfDwUPkBzj3qmnFQP0DR9PH//Rr78cPkVflcFJnNqg9k/Vb0Zbu4+aGgopu6xCS7PRRVPDAwWyCsGtELWSFFrZtBWoeDnaGoPJcqTjIpQSkFDQbEuYEs+wI22qNfr/BDbYJ9BKDnGa2S6jsjXk4mxJmSMeNL6HnR3BhO9U3+EVS69St/Frmce2P0bO3R5YXMaYCg4VyVOdXKe8SxCQvWYvgMVH/KbYWfQRXfYQ+kclNbcV5GBNiKPyCDzbC9Q5JiUBoicE9DpewxLjagaiDyKRZWwtOAXdXozwvIz+438irxdl9Nf2rfzty8quELlmoDJvC/s3T6RnT52vja8gHYNsNZTAYfBYMCM52GMRZqmpBr7Mshe0gQmp/SlxJkQnpQyxnBuYjNYeVVJGwAjgtFHsFxZATxbYyLTyIYd6NlTb/z5vl03smfVn161d0nnlz/2oXU3xeL12rlptFUfWexjjN/xM2WBPCAMHZQDDOOVjzHkPMobrbm3RpQojQUy8/V8yAc2PwcoOMhnuqHr04Pco2lErQUkyNHintJz07hBl7/3xV/40B5cw6WvYcxlQ5647+YPXvjmy3unejMzU/kcWt3zGOM3wnVhiAkq2KZiQhP819Akz3NNfgJoFF0I1cou6qwLLdQnVcA6X6LNf1aMMXm0Y442Bmi5c2gMTmK9O4vJ/vQr/7Bvq3ry/m1/cJkyqzTWDExk/fvv//LfHdx368bXvvT5PcPX/u2P02Pf+daGuROnthZnO5uHs52N/VNzG3rTHaFN5ewcqSN0g5vtkLqX6GxvqjfT29A909/YO9vfPDzX21KeOzvZOXIiPfo/f/iP921Wz+/drJ7et/1OWXctdF3AFhZ48/OfeeNrn97/W8/92p0fefLhPZse//kd408c2Dn+5IFb2k8d2DV+8KE940/t29UmSTn+hQd2STnG9jztbB382K7WmjhfGwAAADxJREFUXz60o/nkg9ubf7F/R+uJB3ZMHnzox7e88Cs/9djCOtdTvidg17Pg92vO+8C+X5b+/1rnh9Zj/wcAAP//hxJZxAAAAAZJREFUAwAaFeXS2P8JXwAAAABJRU5ErkJggg==">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -198,6 +198,17 @@ body{display:flex;height:100vh;overflow:hidden}
     </div>
     <div class="provider-info" id="provider-info"></div>
 
+    <div id="google-model-wrap" style="display:none">
+      <div class="foot-label">Gemini model</div>
+      <select class="groq-model-select" id="google-model-select" onchange="saveGoogleModel(this.value)">
+        <option value="gemini-2.0-flash">Gemini 2.0 Flash (best)</option>
+        <option value="gemini-2.0-flash-lite">Gemini 2.0 Flash Lite (fast)</option>
+        <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+        <option value="gemini-1.5-flash-8b">Gemini 1.5 Flash 8B (fastest)</option>
+        <option value="gemini-1.5-pro">Gemini 1.5 Pro (most capable)</option>
+      </select>
+    </div>
+
     <div id="groq-model-wrap" style="display:none">
       <div class="foot-label">Groq model</div>
       <select class="groq-model-select" id="groq-model-select" onchange="saveGroqModel(this.value)">
@@ -297,11 +308,13 @@ const PROVIDERS = {
 const LS_CHATS     = 'chatbot_chats_v5';
 const LS_THEME     = 'chatbot_theme_v3';
 const LS_GROQ_MDL  = 'chatbot_groq_model';
+const LS_GOOGLE_MDL = 'chatbot_google_model';
 const LS_PROVIDER  = 'chatbot_last_provider';
 
 let provider = 'anthropic';
 let keys = {anthropic:'', google:'', groq:''};
 let groqModel = 'llama-3.3-70b-versatile';
+let googleModel = 'gemini-2.0-flash';
 let history = [], currentId = null, busy = false, chats = {};
 let pendingFiles = [];
 
@@ -447,6 +460,9 @@ function setProvider(p, skipLockCheck) {
   document.getElementById('groq-model-wrap').style.display = p==='groq' ? 'flex' : 'none';
   document.getElementById('groq-model-wrap').style.flexDirection = 'column';
   document.getElementById('groq-model-wrap').style.gap = '4px';
+  document.getElementById('google-model-wrap').style.display = p==='google' ? 'flex' : 'none';
+  document.getElementById('google-model-wrap').style.flexDirection = 'column';
+  document.getElementById('google-model-wrap').style.gap = '4px';
   const ki=document.getElementById('key-input'); ki.placeholder=PROVIDERS[p].placeholder; ki.value=keys[p]?'••••••••••••••••':'';
   setKeyStatus(keys[p]?'ok':'', keys[p]?'✓ Key saved':'No key for this provider');
   updateBadge();
@@ -457,7 +473,7 @@ function setProvider(p, skipLockCheck) {
 function updateBadge() {
   const badge=document.getElementById('hdr-badge');
   const p = (currentId && chats[currentId]?.lockedProvider) || provider;
-  const label = p==='groq' ? 'Groq: '+groqModel.split('-').slice(0,2).join(' ') : PROVIDERS[p].badge;
+  const label = p==='groq' ? 'Groq: '+groqModel.split('-').slice(0,2).join(' ') : p==='google' ? 'Gemini: '+googleModel.replace('gemini-','').replace('-flash-lite','FLite').replace('-flash','Flash').replace('-pro','Pro').replace('-8b','8B') : PROVIDERS[p].badge;
   badge.textContent = label;
   badge.className = 'hdr-badge '+(PROVIDERS[p]?.badgeClass||'');
 }
@@ -465,6 +481,12 @@ function updateBadge() {
 function saveGroqModel(val) {
   groqModel = val;
   try{localStorage.setItem(LS_GROQ_MDL, val);}catch(e){}
+  updateBadge();
+}
+
+function saveGoogleModel(val) {
+  googleModel = val;
+  try{localStorage.setItem(LS_GOOGLE_MDL, val);}catch(e){}
   updateBadge();
 }
 
@@ -490,7 +512,7 @@ async function safeFetch(url,headers,bodyObj,label) {
 }
 
 async function callAnthropic(msgs){const data=await safeFetch('https://api.anthropic.com/v1/messages',{'Content-Type':'application/json','x-api-key':keys.anthropic,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},{model:PROVIDERS.anthropic.model,max_tokens:4096,system:SYSTEM,messages:msgs},'Anthropic');if(data.error)throw new Error(data.error.message);return data.content.map(b=>b.text||'').join('');}
-async function callGoogle(msgs){const gm=msgs.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));const data=await safeFetch('https://generativelanguage.googleapis.com/v1beta/models/'+PROVIDERS.google.model+':generateContent?key='+keys.google,{'Content-Type':'application/json'},{contents:gm,systemInstruction:{parts:[{text:SYSTEM}]},generationConfig:{maxOutputTokens:4096}},'Gemini');if(data.error)throw new Error(data.error.message);return data.candidates?.[0]?.content?.parts?.[0]?.text||'(no response)';}
+async function callGoogle(msgs){const gm=msgs.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));const data=await safeFetch('https://generativelanguage.googleapis.com/v1beta/models/'+googleModel+':generateContent?key='+keys.google,{'Content-Type':'application/json'},{contents:gm,systemInstruction:{parts:[{text:SYSTEM}]},generationConfig:{maxOutputTokens:4096}},'Gemini');if(data.error)throw new Error(data.error.message);return data.candidates?.[0]?.content?.parts?.[0]?.text||'(no response)';}
 async function callGroq(msgs){const data=await safeFetch('https://api.groq.com/openai/v1/chat/completions',{'Content-Type':'application/json','Authorization':'Bearer '+keys.groq},{model:groqModel,messages:[{role:'system',content:SYSTEM},...msgs],max_tokens:4096},'Groq');if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));return data.choices?.[0]?.message?.content||'(no response)';}
 
 function callProvider(msgs,p){
@@ -631,6 +653,7 @@ function saveCurrentChat(explicitTitle) {
     provider,
     lockedProvider: chats[id]?.lockedProvider || provider, // lock on first save
     groqModel,
+    googleModel,
     ts: Date.now()
   };
   try{localStorage.setItem(LS_CHATS,JSON.stringify(chats));}catch(e){}
@@ -652,11 +675,13 @@ function loadChat(id) {
   const chatProvider = c.lockedProvider || c.provider || provider;
   provider = chatProvider;
   if(c.groqModel){ groqModel=c.groqModel; document.getElementById('groq-model-select').value=groqModel; }
+  if(c.googleModel){ googleModel=c.googleModel; document.getElementById('google-model-select').value=googleModel; }
   // Update UI to reflect locked provider without triggering lock warning
   document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+chatProvider).classList.add('active');
   document.getElementById('provider-info').innerHTML=PROVIDERS[chatProvider].info.replace(/\n/g,'<br>');
   document.getElementById('groq-model-wrap').style.display=chatProvider==='groq'?'flex':'none';
+  document.getElementById('google-model-wrap').style.display=chatProvider==='google'?'flex':'none';
   const ki=document.getElementById('key-input'); ki.placeholder=PROVIDERS[chatProvider].placeholder; ki.value=keys[chatProvider]?'••••••••••••••••':'';
   setKeyStatus(keys[chatProvider]?'ok':'',keys[chatProvider]?'✓ Key saved':'No key for this provider');
   updateBadge(); updateNoKeyBar();
@@ -792,6 +817,7 @@ function init() {
   for(const p of Object.keys(PROVIDERS)){try{keys[p]=localStorage.getItem(PROVIDERS[p].lsKey)||'';}catch(e){}}
   try{chats=JSON.parse(localStorage.getItem(LS_CHATS)||'{}');}catch(e){chats={};}
   try{groqModel=localStorage.getItem(LS_GROQ_MDL)||'llama-3.3-70b-versatile'; document.getElementById('groq-model-select').value=groqModel;}catch(e){}
+  try{googleModel=localStorage.getItem(LS_GOOGLE_MDL)||'gemini-2.0-flash'; document.getElementById('google-model-select').value=googleModel;}catch(e){}
   loadTheme();
   const lastProvider = localStorage.getItem(LS_PROVIDER)||'anthropic';
   setProvider(lastProvider, true);
